@@ -3,6 +3,8 @@ const app = express();
 const port = 3000;
 const bodyParper = require("body-parser");
 
+const config = require("./config/key");
+
 const { User } = require("./models/User");
 
 //application/x-www-form-urlencoded
@@ -13,15 +15,12 @@ app.use(bodyParper.json());
 
 const mongoose = require("mongoose");
 mongoose
-  .connect(
-    "mongodb+srv://donghoon:qwer1234@reactbasic.6uksf.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(`MongoDB Error ${err}`));
 
